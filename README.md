@@ -1,13 +1,13 @@
 # Orbit Wallet (Static Demo)
 
-Orbit is a simple, modern Ethereum wallet web interface built as a static site (pure HTML/CSS/JS using ethers.js and MetaMask or any injected wallet).
+Orbit is a simple, modern Solana wallet web interface built as a static site (pure HTML/CSS/JS using ethers.js and MetaMask or any injected wallet).
 
 ## Features
 
 - Connect to an injected wallet (MetaMask, etc.)
-- Show current network, address, and ETH balance
+- Show current network, address, and SOL balance
 - Send ETH to another address
-- Quick button to ask the wallet to switch to Sepolia testnet
+- Quick button to ask the wallet to switch to testnet
 
 > **Security note:** This is a demo UI. Never use it for large amounts of real funds. It does not store private keys; all signing happens inside the browser wallet extension.
 
@@ -16,7 +16,7 @@ Orbit is a simple, modern Ethereum wallet web interface built as a static site (
 You can open `index.html` directly in your browser, but for best results run a tiny static server:
 
 ```bash
-cd /path/to/elevenlabs.html
+cd /path/to/orbit
 python3 -m http.server 8000
 ```
 
