@@ -6,7 +6,7 @@ Orbit is a simple, modern Solana wallet web interface built as a static site (pu
 
 - Connect to an injected wallet (MetaMask, etc.)
 - Show current network, address, and SOL balance
-- Send ETH to another address
+- Send SOL to another address
 - Quick button to ask the wallet to switch to testnet
 
 > **Security note:** This is a demo UI. Never use it for large amounts of real funds. It does not store private keys; all signing happens inside the browser wallet extension.
