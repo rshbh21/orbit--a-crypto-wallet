@@ -1,123 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orbit Wallet</title>
-    <meta
-      name="description"
-      content="Orbit – a modern Ethereum web wallet interface. Connect your wallet, view your balance, and send crypto."
-    />
-    <link rel="stylesheet" href="./styles.css" />
-    <!-- Ethers.js via CDN (v6) -->
-    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.min.js"></script>
-    <script defer type="module" src="./app.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <header class="orbit-header">
-        <div class="orbit-logo">
-          <div class="orbit-logo-orbit"></div>
-          <span>Orbit</span>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orbit Wallet</title>
+  <meta name="description"
+    content="Orbit – a modern Solana web wallet interface. Connect your wallet, view your balance, and send SOL." />
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- @solana/web3.js via CDN – exposes global `solanaWeb3` -->
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <header class="orbit-header">
+      <div class="orbit-logo">
+        <div class="orbit-logo-orbit"></div>
+        <span>Orbit</span>
+      </div>
+
+      <!-- Live SOL price ticker (populated by backend /api/price) -->
+      <div class="orbit-price-ticker">
+        <span class="ticker-label">SOL</span>
+        <span id="solPrice" class="ticker-price">–</span>
+        <span id="solPriceChange" class="ticker-change">–</span>
+      </div>
+
+      <button id="connectButton" class="orbit-button primary">
+        Connect Wallet
+      </button>
+    </header>
+
+    <main class="orbit-main">
+      <section class="orbit-hero">
+        <div class="orbit-hero-text">
+          <h1>Orbit Wallet</h1>
+          <p>
+            A clean, minimal Solana wallet interface in your browser.
+            Connect with Phantom, Backpack, or another compatible Solana
+            wallet to get started.
+          </p>
+          <ul class="orbit-hero-list">
+            <li>Secure – your keys stay in your wallet extension</li>
+            <li>Transparent – shows your current network and balance</li>
+            <li>Practical – send SOL in a few clicks</li>
+          </ul>
+          <p class="orbit-warning">
+            Use Devnet for experimentation. Do not send large amounts of real
+            SOL from this demo UI.
+          </p>
         </div>
-        <button id="connectButton" class="orbit-button primary">
-          Connect Wallet
-        </button>
-      </header>
 
-      <main class="orbit-main">
-        <section class="orbit-hero">
-          <div class="orbit-hero-text">
-            <h1>Orbit Wallet</h1>
-            <p>
-              A clean, minimal Ethereum wallet interface in your browser.
-              Connect with MetaMask or another compatible wallet to get started.
+        <div class="orbit-card orbit-status-card">
+          <h2>Connection</h2>
+          <div class="orbit-status-row">
+            <span class="label">Status</span>
+            <span id="connectionStatus" class="value muted">Not connected</span>
+          </div>
+          <div class="orbit-status-row">
+            <span class="label">Network</span>
+            <span id="networkName" class="value muted">–</span>
+          </div>
+          <div class="orbit-status-row">
+            <span class="label">Address</span>
+            <span id="walletAddress" class="value mono truncated">–</span>
+          </div>
+          <div class="orbit-status-row">
+            <span class="label">Balance</span>
+            <span id="walletBalance" class="value mono">–</span>
+          </div>
+          <div class="orbit-status-row">
+            <span class="label">≈ USD</span>
+            <span id="walletBalanceUsd" class="value muted"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="orbit-grid">
+        <!-- Send SOL -->
+        <div class="orbit-card">
+          <h2>Send SOL</h2>
+          <form id="sendForm" class="orbit-form">
+            <label>
+              To address
+              <input id="sendTo" type="text" placeholder="Solana public key…" autocomplete="off" required />
+            </label>
+            <label>
+              Amount (SOL)
+              <input id="sendAmount" type="number" step="0.0001" min="0" placeholder="0.01" required />
+            </label>
+            <button type="submit" class="orbit-button full primary">Send</button>
+            <p id="sendStatus" class="orbit-status-text"></p>
+          </form>
+        </div>
+
+        <!-- Tools -->
+        <div class="orbit-card">
+          <h2>Tools</h2>
+          <div class="orbit-tools">
+            <button id="refreshButton" class="orbit-button secondary full">
+              Refresh balance
+            </button>
+            <button id="switchDevnetButton" class="orbit-button ghost full">
+              Switch to Mainnet
+            </button>
+            <p class="orbit-helper-text">
+              Orbit is a non-custodial interface. It never sees your private
+              keys – all signing happens inside your wallet extension.
             </p>
-            <ul class="orbit-hero-list">
-              <li>Secure – your keys stay in your wallet extension</li>
-              <li>Transparent – shows your current network and balance</li>
-              <li>Practical – send ETH in a few clicks</li>
-            </ul>
-            <p class="orbit-warning">
-              Use test networks for experimentation (e.g. Sepolia). Do not send
-              large amounts of real funds from this demo UI.
-            </p>
           </div>
-          <div class="orbit-card orbit-status-card">
-            <h2>Connection</h2>
-            <div class="orbit-status-row">
-              <span class="label">Status</span>
-              <span id="connectionStatus" class="value muted">Not connected</span>
-            </div>
-            <div class="orbit-status-row">
-              <span class="label">Network</span>
-              <span id="networkName" class="value muted">–</span>
-            </div>
-            <div class="orbit-status-row">
-              <span class="label">Address</span>
-              <span id="walletAddress" class="value mono truncated">–</span>
-            </div>
-            <div class="orbit-status-row">
-              <span class="label">Balance</span>
-              <span id="walletBalance" class="value mono">–</span>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="orbit-grid">
-          <div class="orbit-card">
-            <h2>Send ETH</h2>
-            <form id="sendForm" class="orbit-form">
-              <label>
-                To address
-                <input
-                  id="sendTo"
-                  type="text"
-                  placeholder="0x..."
-                  autocomplete="off"
-                  required
-                />
-              </label>
-              <label>
-                Amount (ETH)
-                <input
-                  id="sendAmount"
-                  type="number"
-                  step="0.0001"
-                  min="0"
-                  placeholder="0.01"
-                  required
-                />
-              </label>
-              <button type="submit" class="orbit-button full primary">
-                Send
-              </button>
-              <p id="sendStatus" class="orbit-status-text"></p>
-            </form>
-          </div>
+      <!-- Recent Transactions (populated by backend /api/transactions) -->
+      <section class="orbit-card orbit-tx-section">
+        <h2>Recent Transactions</h2>
+        <ul id="txList" class="tx-list">
+          <li class="tx-empty">Connect your wallet to load transactions.</li>
+        </ul>
+      </section>
+    </main>
 
-          <div class="orbit-card">
-            <h2>Tools</h2>
-            <div class="orbit-tools">
-              <button id="refreshButton" class="orbit-button secondary full">
-                Refresh balance
-              </button>
-              <button id="switchSepoliaButton" class="orbit-button ghost full">
-                Switch to Sepolia
-              </button>
-              <p class="orbit-helper-text">
-                Orbit is a non-custodial interface. It never sees your private
-                keys – all signing happens inside your wallet extension.
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
+    <footer class="orbit-footer">
+      <span>Orbit Wallet – demo Solana web wallet UI</span>
+    </footer>
+  </div>
+</body>
 
-      <footer class="orbit-footer">
-        <span>Orbit Wallet – demo web wallet UI</span>
-      </footer>
-    </div>
-  </body>
 </html>
-
