@@ -1,0 +1,520 @@
+:root {
+  --orbit-bg: #020617;
+  --orbit-bg-elevated: #020617;
+  --orbit-card: rgba(15, 23, 42, 0.95);
+  --orbit-border-subtle: rgba(148, 163, 184, 0.35);
+  --orbit-accent: #6366f1;
+  --orbit-accent-soft: rgba(79, 70, 229, 0.12);
+  --orbit-accent-strong: #4f46e5;
+  --orbit-accent-ring: rgba(129, 140, 248, 0.6);
+  --orbit-danger: #f97373;
+  --orbit-success: #22c55e;
+  --orbit-text: #e5e7eb;
+  --orbit-text-muted: #9ca3af;
+  --orbit-radius-lg: 18px;
+  --orbit-radius-full: 999px;
+  --orbit-shadow-soft: 0 18px 55px rgba(15, 23, 42, 0.8);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Inter", sans-serif;
+  background:
+    radial-gradient(circle at top left, #1d4ed8 0, transparent 50%),
+    radial-gradient(circle at bottom right, #7c3aed 0, transparent 55%),
+    var(--orbit-bg);
+  color: var(--orbit-text);
+}
+
+#app {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 18px 32px;
+}
+
+.orbit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.orbit-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.88rem;
+  color: #e5e7eb;
+}
+
+.orbit-logo-orbit {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #f97316, #4f46e5 45%, #0f172a);
+  box-shadow:
+    0 0 28px rgba(56, 189, 248, 0.7),
+    0 0 45px rgba(79, 70, 229, 0.5);
+}
+
+.orbit-logo-orbit::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 1px solid rgba(129, 140, 248, 0.5);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(-20deg);
+}
+
+.orbit-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.orbit-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.orbit-hero-text h1 {
+  font-size: 2.4rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px;
+}
+
+.orbit-hero-text p {
+  margin: 0 0 14px;
+  color: var(--orbit-text-muted);
+  max-width: 35rem;
+}
+
+.orbit-hero-list {
+  padding-left: 1.1rem;
+  margin: 0 0 10px;
+  color: var(--orbit-text-muted);
+  font-size: 0.95rem;
+}
+
+.orbit-hero-list li + li {
+  margin-top: 4px;
+}
+
+.orbit-warning {
+  font-size: 0.78rem;
+  color: #fecaca;
+  background: rgba(30, 64, 175, 0.4);
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(248, 250, 252, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.orbit-warning::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(248, 250, 252, 0.15);
+  font-size: 0.7rem;
+}
+
+.orbit-card {
+  position: relative;
+  border-radius: var(--orbit-radius-lg);
+  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.3), transparent 55%),
+    radial-gradient(circle at bottom, rgba(88, 28, 135, 0.25), transparent 60%),
+    rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: var(--orbit-shadow-soft);
+  padding: 18px 18px 16px;
+  overflow: hidden;
+}
+
+.orbit-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at top left, rgba(248, 250, 252, 0.06), transparent 55%);
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.orbit-card h2 {
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a5b4fc;
+  margin: 0 0 12px;
+}
+
+.orbit-status-card {
+  min-height: 210px;
+}
+
+.orbit-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(51, 65, 85, 0.9);
+}
+
+.orbit-status-row:last-of-type {
+  border-bottom: none;
+}
+
+.orbit-status-row .label {
+  color: var(--orbit-text-muted);
+}
+
+.orbit-status-row .value {
+  font-weight: 500;
+}
+
+.orbit-status-row .value.muted {
+  color: var(--orbit-text-muted);
+}
+
+.mono {
+  font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.82rem;
+}
+
+.truncated {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orbit-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+  gap: 18px;
+}
+
+.orbit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.orbit-form label {
+  font-size: 0.82rem;
+  color: var(--orbit-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.orbit-form input {
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  background: rgba(15, 23, 42, 0.92);
+  color: var(--orbit-text);
+  padding: 9px 11px;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.orbit-form input::placeholder {
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.orbit-form input:focus {
+  border-color: var(--orbit-accent);
+  box-shadow: 0 0 0 1px var(--orbit-accent-ring);
+  background: rgba(15, 23, 42, 0.98);
+}
+
+.orbit-status-text {
+  min-height: 1.1em;
+  font-size: 0.8rem;
+  margin: 4px 2px 0;
+  color: var(--orbit-text-muted);
+}
+
+.orbit-status-text.success {
+  color: var(--orbit-success);
+}
+
+.orbit-status-text.error {
+  color: var(--orbit-danger);
+}
+
+.orbit-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orbit-helper-text {
+  font-size: 0.78rem;
+  color: var(--orbit-text-muted);
+  margin-top: 4px;
+}
+
+.orbit-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--orbit-radius-full);
+  border: 1px solid transparent;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(15, 23, 42, 0.96);
+  color: var(--orbit-text);
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.06s ease;
+}
+
+.orbit-button.primary {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  border-color: rgba(191, 219, 254, 0.4);
+  color: #f9fafb;
+  box-shadow:
+    0 14px 35px rgba(79, 70, 229, 0.55),
+    0 0 0 1px rgba(129, 140, 248, 0.4);
+}
+
+.orbit-button.secondary {
+  background: rgba(15, 23, 42, 0.96);
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+.orbit-button.ghost {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.orbit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
+}
+
+.orbit-button.primary:hover {
+  background: linear-gradient(135deg, #4f46e5, #818cf8);
+}
+
+.orbit-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.orbit-button.full {
+  width: 100%;
+}
+
+.orbit-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.orbit-footer {
+  margin-top: 26px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(30, 64, 175, 0.65);
+  font-size: 0.78rem;
+  color: rgba(148, 163, 184, 0.9);
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 880px) {
+  .orbit-hero {
+    grid-template-columns: minmax(0, 1.1fr);
+  }
+
+  .orbit-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .orbit-status-card {
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  #app {
+    padding-inline: 14px;
+  }
+
+  .orbit-header {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .orbit-hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .orbit-card {
+    padding: 16px 14px 14px;
+  }
+}
+
+/* ── Price ticker ─────────────────────────────────────────────────────────── */
+.orbit-price-ticker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: var(--orbit-radius-full);
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  backdrop-filter: blur(8px);
+}
+
+.ticker-label {
+  color: var(--orbit-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.ticker-price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--orbit-text);
+}
+
+.ticker-change {
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.ticker-change.positive { color: var(--orbit-success); }
+.ticker-change.negative { color: var(--orbit-danger); }
+
+/* ── Transaction list ─────────────────────────────────────────────────────── */
+.orbit-tx-section {
+  padding-bottom: 20px;
+}
+
+.tx-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tx-empty,
+.tx-loading,
+.tx-error {
+  font-size: 0.83rem;
+  color: var(--orbit-text-muted);
+  padding: 10px 4px;
+  text-align: center;
+}
+
+.tx-error { color: var(--orbit-danger); }
+
+.tx-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 12px;
+  padding: 9px 12px;
+  transition: background 0.15s ease;
+}
+
+.tx-item:hover {
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.tx-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tx-meta {
+  margin-top: 4px;
+  font-size: 0.74rem;
+}
+
+.tx-sig a {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 0.8rem;
+  color: #a5b4fc;
+  text-decoration: none;
+}
+
+.tx-sig a:hover { text-decoration: underline; }
+
+.tx-delta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tx-delta.positive { color: var(--orbit-success); }
+.tx-delta.negative { color: var(--orbit-danger); }
+
+.tx-date { color: var(--orbit-text-muted); }
+
+.tx-status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.tx-status.success {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--orbit-success);
+}
+
+.tx-status.failed {
+  background: rgba(249, 115, 115, 0.15);
+  color: var(--orbit-danger);
+}
+
+.tx-fee { color: rgba(148, 163, 184, 0.6); }
+
+@media (max-width: 640px) {
+  .orbit-price-ticker { display: none; }
+}

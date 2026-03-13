@@ -43,6 +43,40 @@ function getProvider() {
   return null;
 }
 
+// Phantom injects window.solana asynchronously — wait up to 3 s for it.
+function getProviderAsync(timeoutMs = 3000) {
+  return new Promise((resolve) => {
+    const provider = getProvider();
+    if (provider) { resolve(provider); return; }
+
+    // Listen for Phantom's own ready event first
+    const onReady = () => {
+      clearTimeout(timer);
+      resolve(getProvider());
+    };
+    window.addEventListener("phantom#initialized", onReady, { once: true });
+
+    // Fallback: poll every 100 ms
+    let elapsed = 0;
+    const interval = setInterval(() => {
+      const p = getProvider();
+      if (p) {
+        clearInterval(interval);
+        clearTimeout(timer);
+        window.removeEventListener("phantom#initialized", onReady);
+        resolve(p);
+      }
+    }, 100);
+
+    // Give up after timeoutMs
+    const timer = setTimeout(() => {
+      clearInterval(interval);
+      window.removeEventListener("phantom#initialized", onReady);
+      resolve(null);
+    }, timeoutMs);
+  });
+}
+
 async function apiFetch(path) {
   const res = await fetch(`${API_BASE}${path}`);
   if (!res.ok) {
@@ -79,13 +113,24 @@ setInterval(refreshPrice, 30_000);
 // ── Wallet connection ──────────────────────────────────────────────────────
 
 async function connectWallet() {
-  const provider = getProvider();
+  connectButton.disabled = true;
+  connectButton.textContent = "Detecting wallet…";
+
+  const provider = await getProviderAsync(3000);
   if (!provider) {
-    alert("No Solana wallet extension found. Install Phantom (phantom.app) or Backpack to continue.");
+    connectButton.textContent = "Connect Wallet";
+    connectButton.disabled = false;
+    alert(
+      "No Solana wallet extension detected.\n\n" +
+      "Possible fixes:\n" +
+      "1. Make sure Phantom is enabled for this site (click the extension icon → enable).\n" +
+      "2. Open this page over http:// (not file://) — extensions don't inject into file:// pages.\n" +
+      "3. Try refreshing the page after installing Phantom.\n\n" +
+      "Get Phantom at https://phantom.app"
+    );
     return;
   }
   try {
-    connectButton.disabled = true;
     connectButton.textContent = "Connecting…";
     const resp = await provider.connect();
     walletPublicKey = resp.publicKey;
