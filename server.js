@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3001;
 // ── CORS ────────────────────────────────────────────────────────────────────
 const allowedOrigins = process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
-    : ["http://localhost:5500", "http://127.0.0.1:5500", "null"]; // "null" covers file://
+    : ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:5173", "null"]; // "null" covers file://
 
 app.use(
     cors({
